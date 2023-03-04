@@ -4,14 +4,12 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-// import MenuIcon from "@mui/icons-material/Menu";
 
 export default function ButtonAppBar() {
   return (
     <Box >
-      <AppBar position="static" sx={{backgroundColor:"#EDDBC7",flexDirection:"row",justifyContent:"center"}} >
+      <AppBar position="static" sx={{backgroundColor:"#C92C6D",flexDirection:"row",justifyContent:"center"}} >
         <Toolbar>
           <IconButton
             size="large"

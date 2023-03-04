@@ -1,13 +1,14 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const postCompanies = mongoose.Schema({
-    companyName:String,
-    companyAddress:{},
-    coordinates:Number
+const postCompanies = new mongoose.Schema({
+  companyName: {
+    type: String,
+    required: true,
+  },
+  companyAddress: {},
+  coordinates: {},
 });
 
+const PostCompanies = mongoose.model("PostCompanies", postCompanies);
 
-
-const PostCompanies = mongoose.model("PostCompanies",postCompanies);
-
-export default PostCompanies;
+module.exports = PostCompanies;
