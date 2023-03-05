@@ -2,7 +2,8 @@ import AppBar from "./Appbar.js";
 import Button from "@mui/material/Button";
 // import { width } from "@mui/system";
 // import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import CompForm from './compForm.js'
+import CompForm from "./compForm.js";
+import { Link } from "react-router-dom";
 function Home() {
   return (
     <div>
@@ -28,7 +29,7 @@ function Home() {
           variant="contained"
           sx={{ marginBottom: 2, backgroundColor: "#609EA2", width: "15rem" }}
         >
-          View all companies
+          <Link to='/viewandmanagecompanies' style={{color:"white",textDecoration: "none"}}>View all companies</Link>
         </Button>
         <Button
           variant="contained"
@@ -43,9 +44,6 @@ function Home() {
           Delete a Company
         </Button>
       </div>
-      {/* <Routes>
-        <Route path="/registeruser" element={<UserForm/>}/>
-      </Routes> */}
     </div>
   );
 }

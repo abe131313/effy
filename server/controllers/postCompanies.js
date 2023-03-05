@@ -8,7 +8,17 @@ module.exports.createCompany = async (req,res) => {
         await newCompany.save();
         res.status(200).send("company registered successfully");
     } catch (error) {
-        console.log(error);
+        res.send(error);
     }
     // console.log('hello its in create company');
+}
+
+
+module.exports.getCompanies = async (req,res) => {
+    try {
+        let companyData = await PostCompanies.find({});
+        res.send(companyData);
+    } catch (error) {
+        console.log(error);
+    }
 }
