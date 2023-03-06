@@ -1,4 +1,5 @@
 const PostCompanies = require("../models/companies.js");
+const PostUsers = require("../models/users2.js");
 
 module.exports.createCompany = async (req,res) => {
     try {
@@ -18,6 +19,16 @@ module.exports.getCompanies = async (req,res) => {
     try {
         let companyData = await PostCompanies.find({});
         res.send(companyData);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports.deleteCompany = async (req,res) => {
+    try {
+        let val = req.body.companyName;
+        let companyData = await PostCompanies.deleteMany({companyName:`${val}`});
+        let userData = await PostUsers.deleteMany({ company_name: `${val}`});
     } catch (error) {
         console.log(error);
     }

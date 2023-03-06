@@ -7,58 +7,138 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
+import { CompanyContext } from "../contexts/selectedCompany.js";
+import { useSnackbar } from "notistack";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(calories) {
+  return { calories };
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+const rows = [createData("")];
 
 // console.log(rows);
 
 export default function BasicTable() {
-  let [companyNames, setCompanynames] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+  const { setCompname, companyNames, setCompanynames } =
+    useContext(CompanyContext);
+  //   let [uniqueCompanyNames, setUniqueCompanyNames] = useState([]);
   let getCompanies = async () => {
     try {
       let response = await axios.get(`http://localhost:5000/api/getcompanies`);
       setCompanynames((prevCompanyNames) => {
         const newCompanyNames = response.data.map((ele) => ele.companyName);
-        return [...prevCompanyNames, ...newCompanyNames];
+        let val = [...prevCompanyNames, ...newCompanyNames];
+        // console.log([...new Set(val)])
+        return [...new Set(val)];
       });
+      //   console.log(arr
     } catch (error) {}
   };
+  let companyName;
+  let buttonHandler = async (element) => {
+    try {
+      companyName = element.getAttribute("value");
+      //   let request = await axios.post(
+      //     `http://localhost:5000/apiusers/fetchUsersundercompany`,
+      //     {
+      //       compName: `${companyName}`,
+      //     }
+      //   );
+      setCompname(`${companyName}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //   let arr = [];
+  //   arr.push(...new Set(companyNames));
+
+  async function deleteCompany(data) {
+    try {
+      let val = data.getAttribute("value");
+      let request = axios.post(`http://localhost:5000/api/deleteCompany`, {
+        companyName: `${val}`,
+      });
+      enqueueSnackbar("Succesfully deleted the company and its users", {
+        variant: "success",
+      });
+      setCompanynames(companyNames.filter((item) => item !== val));
+    } catch (error) {}
+  }
 
   useEffect(() => {
     getCompanies();
+    // setUniqueCompanyNames([...new Set(companyNames)]);
   }, []);
-  console.log(companyNames);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead sx={{ backgroundColor: "#332C39" }}>
           <TableRow>
-            <TableCell>Company </TableCell>
-            <TableCell align="right">Users</TableCell>
+            <TableCell sx={{ color: "white" }}>Company </TableCell>
+            <TableCell align="right" sx={{ color: "white" }}>
+              Users
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {companyNames.map((row) => (
             <TableRow
-              key={row.name}
+            //   key={row}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
+              <TableCell align="right">
+                <Button
+                  variant="contained"
+                  id={row}
+                  value={row}
+                  sx={{
+                    marginBottom: 2,
+                    backgroundColor: "#609EA2",
+                    width: "10rem",
+                  }}
+                  onClick={(e) => {
+                    buttonHandler(e.currentTarget);
+                  }}
+                >
+                  <Typography>
+                    <Link
+                      to={`/viewandmanageusers`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      view all users
+                    </Link>
+                  </Typography>
+                </Button>
+                <Button
+                  variant="contained"
+                  id={row}
+                  value={row}
+                  sx={{
+                    marginBottom: 2,
+                    backgroundColor: "#609EA2",
+                    width: "15rem",
+                  }}
+                  onClick={(e) => {
+                    deleteCompany(e.currentTarget);
+                  }}
+                >
+                  <Typography>
+                    <Link style={{ textDecoration: "none", color: "black" }}>
+                      Delete the company and its users
+                    </Link>
+                  </Typography>
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

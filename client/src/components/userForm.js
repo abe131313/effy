@@ -18,9 +18,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useSnackbar } from "notistack";
+import { useContext } from "react";
+import { CompanyContext } from "../contexts/selectedCompany.js";
 
 export default function OutlinedCard() {
-  let [companyNames, setCompanynames] = useState([]);
+  const {companyNames,setCompanynames} = useContext(CompanyContext);
+  // let [companyNames, setCompanynames] = useState([]);
   let fetchCompanies = async () => {
     try {
       const response = await axios.get(
@@ -29,7 +32,8 @@ export default function OutlinedCard() {
       console.log(response);
       setCompanynames((prevCompanyNames) => {
         const newCompanyNames = response.data.map((ele) => ele.companyName);
-        return [...prevCompanyNames, ...newCompanyNames];
+        return [...prevCompanyNames,...newCompanyNames];
+        // return new Set(val);
       });
     } catch (e) {
       console.log(e);
@@ -40,6 +44,9 @@ export default function OutlinedCard() {
     fetchCompanies();
   }, []);
 
+  let arr = [];
+  arr.push(...new Set(companyNames))
+  console.log(arr);
   const [age, setAge] = useState("");
 
   const handleChange = (event) => {
@@ -138,7 +145,7 @@ export default function OutlinedCard() {
           type="date"
           id="birthday"
           name="birthday"
-          style={{ width: "30vw" }}
+          style={{ width: "10vw" }}
           onChange={(e) => {
             setUserForm({ ...userForm, date_of_birth: e.target.value });
           }}
@@ -186,7 +193,7 @@ export default function OutlinedCard() {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {companyNames.map((ele) => {
+            {arr.map((ele) => {
               return <MenuItem value={ele}>{ele}</MenuItem>;
             })}
           </Select>
