@@ -71,6 +71,15 @@ export default function BasicTable() {
     } catch (error) {}
   }
 
+  async function companyDetails(data){
+    try {
+        let val = data.getAttribute("value")
+
+    } catch (error) {
+        
+    }
+  }
+
   useEffect(() => {
     getCompanies();
     // setUniqueCompanyNames([...new Set(companyNames)]);
@@ -104,7 +113,7 @@ export default function BasicTable() {
                   sx={{
                     marginBottom: 2,
                     backgroundColor: "#609EA2",
-                    width: "10rem",
+                    width: "8rem",
                   }}
                   onClick={(e) => {
                     buttonHandler(e.currentTarget);
@@ -148,11 +157,11 @@ export default function BasicTable() {
                     width: "10rem",
                   }}
                   onClick={(e) => {
-                    deleteCompany(e.currentTarget);
+                    buttonHandler(e.currentTarget);
                   }}
                 >
                   <Typography>
-                    <Link style={{ textDecoration: "none", color: "black" }}>
+                    <Link to='/companydetails'style={{ textDecoration: "none", color: "black" }}>
                       Comapany details
                     </Link>
                   </Typography>

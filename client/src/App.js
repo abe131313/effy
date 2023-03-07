@@ -6,6 +6,7 @@ import UserForm from "./components/userForm.js";
 import Viewallusers from "./components/viewallusers";
 import { CompanyContext } from "./contexts/selectedCompany.js";
 import { useState } from "react";
+import CompanyDetails from './components/companydetails.js'
 
 import { SnackbarProvider } from "notistack";
 function App() {
@@ -25,6 +26,7 @@ function App() {
             path="/viewandmanageusers"
             element={<Viewallusers />}
           ></Route>
+          <Route path="/companydetails" element={<CompanyDetails/>}></Route>
         </Routes>
       </CompanyContext.Provider>
     </SnackbarProvider>
