@@ -30,18 +30,6 @@ export default function RegisterUser() {
         >
           <Link to='/viewandmanagecompanies' style={{color:"white",textDecoration: "none"}}>View all companies</Link>
         </Button>
-        <Button
-          variant="contained"
-          sx={{ marginBottom: 2, backgroundColor: "#609EA2", width: "15rem" }}
-        >
-          Update a Company
-        </Button>
-        <Button
-          variant="contained"
-          sx={{ marginBottom: 2, backgroundColor: "#609EA2", width: "15rem" }}
-        >
-          Delete a Company
-        </Button>
       </div>
     </div>
   );
