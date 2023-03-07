@@ -90,7 +90,7 @@ export default function BasicTable() {
         <TableBody>
           {companyNames.map((row) => (
             <TableRow
-            //   key={row}
+              //   key={row}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -135,6 +135,25 @@ export default function BasicTable() {
                   <Typography>
                     <Link style={{ textDecoration: "none", color: "black" }}>
                       Delete the company and its users
+                    </Link>
+                  </Typography>
+                </Button>
+                <Button
+                  variant="contained"
+                  id={row}
+                  value={row}
+                  sx={{
+                    marginBottom: 2,
+                    backgroundColor: "#609EA2",
+                    width: "10rem",
+                  }}
+                  onClick={(e) => {
+                    deleteCompany(e.currentTarget);
+                  }}
+                >
+                  <Typography>
+                    <Link style={{ textDecoration: "none", color: "black" }}>
+                      Comapany details
                     </Link>
                   </Typography>
                 </Button>

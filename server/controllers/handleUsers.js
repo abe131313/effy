@@ -47,8 +47,29 @@ module.exports.deletUsers = async (req, res) => {
 
 module.exports.updateUsers = async (req,res) => {
     try {
-        let response = await PostUsers.updateMany({first_name:req.body.first_name});
-        res.status(200).send('deleted');
+        let updateVal = req.body.updateVal;
+        let response = await PostUsers.updateMany({first_name:req.body.first_name},{$set:{first_name:updateVal}});
+        res.status(200).send('updated');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports.migrateUsers = async (req,res) => {
+    try {
+        let companyToMigrate = req.body.company_name;
+        let first_name = req.body.first_name;
+        let response = await PostUsers.updateOne({first_name:first_name},{$set:{company_name:companyToMigrate}});
+        // res.status(200).send('updated');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports.fetchUsers = async (req,res) => {
+    try {
+        let Users = await PostUsers.find({first_name:req.body.first_name});
+        res.status(200).send(Users);
     } catch (error) {
         console.log(error);
     }
